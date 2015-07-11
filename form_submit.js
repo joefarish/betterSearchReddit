@@ -1,35 +1,34 @@
 window.onload = function(){
-//Override search location
-var searchForm = document.getElementById("search");
 
-if(searchForm){
+    var searchForm = document.getElementById("search");
 
-//override the default action
-searchForm.action="https://www.google.com/search";
-
-if (searchForm.attachEvent) {
-    searchForm.attachEvent("submit", addSiteToSearch);
-} else {
-    searchForm.addEventListener("submit", addSiteToSearch);
+    if(searchForm){
+        searchForm.action="https://www.google.com/search"; //override default search action
+        searchForm.addEventListener("submit", addSiteToSearch); //add a listener for the search button
+    }
 }
 
-}
+
 
 function addSiteToSearch(e) {
-    if (e.preventDefault) {
 
-    	//prevent Default form submission...
     	e.preventDefault();
 
+        var s = document.getElementById("search");
+        var sv = s.firstChild.value;
+    	sv = "site:"+document.URL+" "+sv;
 
-    	var searchBox = document.getElementById("search").firstChild;
+        var t=document.getElementsByName("t")[0];
+        var tv=t.options[t.selectedIndex].value;
 
-    	//Inject the correct site:reddit.com/r/ etc by adding document.URL
-    	searchBox.value = "site:"+document.URL+" "+searchBox.value;
+        if(tv!="all"){
+            t.name=t.name+"bs";
+        var tb=document.getElementsByName("tbs")[0];
+        var tbv=tb.options[tb.selectedIndex].value;
+        var tbv="qdr:"+tv.charAt(0);
+            console.log(tbv);
+        }
 
-    	searchForm.submit();
-	}
+    	//s.submit();
     return false;
-}
-
 }
