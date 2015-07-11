@@ -1,0 +1,14 @@
+{
+  "name": "Better Search for reddit",
+  "description":"Overrides the default reddit search and redirects the user to a Google search using the site:www.reddit.com/ search modifier",
+  "version": "1.1",
+  "content_scripts": [{
+    "matches": ["https://www.reddit.com/*"],
+    "js": ["form_submit.js"],
+    "run_at": "document_start"
+}],
+"permissions": [
+    "tabs", "https://www.reddit.com/*"
+],
+  "manifest_version": 2
+}
