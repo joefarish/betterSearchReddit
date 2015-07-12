@@ -1,68 +1,42 @@
 window.onload = function(){
 
-    var searchForm = document.getElementById("search");
-
-    if(searchForm){
-        searchForm.action="https://www.google.com/search"; //override default search action
-        searchForm.addEventListener("submit", addSiteToSearch); //add a listener for the search button
-    }
+    //add a listener for the search button
+    if(searchForm = document.getElementById("search")) searchForm.addEventListener("submit", addSiteToSearch);
 }
-
-
 
 function addSiteToSearch(e) {
 
     	e.preventDefault();
 
-        var s = document.getElementById("search");
-        var sv = s.firstChild.value;
+        var searchForm = document.getElementById("search");
+        var searchValue = searchForm.firstChild.value;
     	
-
-        var ignore = ["author:", "site:", "url:", "selftext:","self:","nsfw:"];
-
+        var modifiers = ["author:", "site:", "url:", "selftext:","self:","nsfw:"];
 
         var overrideSearch=true;
 
-        for (var i in ignore) {
-            
-            if (sv.includes(ignore[i])) {
-                doOverrideSearch=false;
-            }
+        for (var i in modifiers) {
+            if (searchValue.includes(modifiers[i])) doOverrideSearch=false; // if a search modifier is used, don't override the search action
         }
 
         if (overrideSearch) {
 
+            searchForm.action="https://www.google.com/search"; // Use Google search!
 
+            var site = document.getElementsByName("restrict_sr")[0].checked? document.URL:"www.reddit.com/" //Handles the restrict search to subreddit checkbox
 
-            // Handle restrict search to subreddit
+            searchForm.firstChild.value = "site:"+site+" "+searchForm.firstChild.value;
 
-            var r=document.getElementsByName("restrict_sr")[0];
-            var site=document.URL
-            if (r) { 
-                if (r.checked) {
-                    
-                } else {site="www.reddit.com/"}
-            }
+            console.log(searchForm.firstChild.value);
 
+            var timeSelect=document.getElementsByName("t")[0];
+            timeSelect.setAttribute("name","tbs"); //Google search uses tbs for time based searcges
 
+            timeSelect = document.getElementsByName("tbs")[0];
 
-
-
-            sv = "site:"+site+" "+sv;
-
-            console.log(sv);
-
-            var t=document.getElementsByName("t")[0];
-            var tv=t.options[t.selectedIndex].value;
-
-            if(tv!="all"){
-                t.name=t.name+"bs";
-            var tb=document.getElementsByName("tbs")[0];
-            var tbv=tb.options[tb.selectedIndex].value;
-            var tbv="qdr:"+tv.charAt(0);
-            }
-
+            // the first charcter of the options on the Time: select box = the character google needs to restrict search to a time range
+            timeSelect.options[timeSelect.selectedIndex].value="qdr:"+timeSelect.options[timeSelect.selectedIndex].value.charAt(0); 
         }
-    	//s.submit();
+    	//searchForm.submit();
     return false;
 }
