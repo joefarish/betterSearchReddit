@@ -37,6 +37,6 @@ function addSiteToSearch(e) {
             // the first charcter of the options on the Time: select box = the character google needs to restrict search to a time range
             timeSelect.options[timeSelect.selectedIndex].value="qdr:"+timeSelect.options[timeSelect.selectedIndex].value.charAt(0); 
         }
-    	//searchForm.submit();
+    	searchForm.submit();
     return false;
 }

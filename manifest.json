@@ -1,7 +1,7 @@
 {
   "name": "Better Search for reddit",
   "description":"Overrides the default reddit search and redirects the user to a Google search using the site:www.reddit.com/ search modifier",
-  "version": "1.1",
+  "version": "1.3",
   "content_scripts": [{
     "matches": ["https://www.reddit.com/*"],
     "js": ["form_submit.js"],
