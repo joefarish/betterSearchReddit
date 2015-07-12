@@ -23,7 +23,18 @@ function addSiteToSearch(e) {
 
             searchForm.action="https://www.google.com/search"; // Use Google search!
 
-            var site = document.getElementsByName("restrict_sr")[0].checked? document.URL:"www.reddit.com/" //Handles the restrict search to subreddit checkbox
+            var restrict = document.getElementsByName("restrict_sr")[0];
+
+
+            var site;
+
+            if (restrict) {
+                site = document.getElementsByName("restrict_sr")[0].checked? document.URL : "www.reddit.com/"; //Handles the restrict search to subreddit checkbox
+            }  else {
+                site = document.URL;
+            }
+
+            
 
             searchForm.firstChild.value = "site:"+site+" "+searchForm.firstChild.value;
 
